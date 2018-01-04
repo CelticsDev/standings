@@ -14,7 +14,7 @@ module.exports = function(grunt) {
       },
       js: {
         files: ['src/js/*.js'],
-        tasks: ['browserify', 'import', 'notify:done', 'uglify']
+        tasks: ['browserify', 'import', 'notify:done']
       },
       css: {
         files: ['src/scss/*.scss',
@@ -133,6 +133,7 @@ module.exports = function(grunt) {
   require('grunt-log-headers')(grunt);
   grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-import');
   grunt.loadNpmTasks('grunt-contrib-sass');
