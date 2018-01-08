@@ -3,42 +3,55 @@
 <script src="https://i.cdn.turner.com/nba/nba/.element/media/2.0/teamsites/celtics/js/standings.min.js"></script> -->
 <script>
 jQuery(document).ready(function() {
-	jQuery.ajax({
-	    url: 'http://data.nba.com/data/v2015/json/mobile_teams/nba/2017/00_standings.json',
-	    async: false,
-	    success: function(standingsData) {
-	        for (let i = 0; i < standingsData.sta.co.length; i++) {
-	            for (let x = 0; x < standingsData.sta.co[i].di.length; x++) {
-	                for (let t = 0; t < standingsData.sta.co[i].di[x].t.length; t++) {
-	                    var conferences = ['.east', '.west'];
-	                    var place = standingsData.sta.co[i].di[x].t[t].see;
-	                    var rowHTML = '';
-	                    var activeStatus = '';
-	                    if (standingsData.sta.co[i].di[x].t[t].see <= 8) {
-	                        seed = standingsData.sta.co[i].di[x].t[t].see;
-	                    }
-	                    if (standingsData.sta.co[i].di[x].t[t].ta == 'BOS') {
-	                        activeStatus = 'active';
-	                    }
-	                    var index = ['see','w','l','gb','cr','dr','hr','ar','l10','str'];
-	                    for (o = 0; o < index.length; o++){
-	                    	if (o == 0){
-	                    		rowHTML += '<td class=' + standingsData.sta.co[i].di[x].t[t].ta + '><span>' + standingsData.sta.co[i].di[x].t[t].see + '</span>&nbsp;&nbsp;' + standingsData.sta.co[i].di[x].t[t].tc.toUpperCase() + ' ' + standingsData.sta.co[i].di[x].t[t].tn.toUpperCase() + '</td>';
-	                    	}
-	                    	else {
-	                    		rowHTML += '<td>' + standingsData.sta.co[i].di[x].t[t][index[o]] + '</td>';
-	                    	}
-	                    }
-	                    jQuery(conferences[i] + ' tr:nth-child(' + (place + 2) + ')').html(rowHTML);
-	                    jQuery(conferences[i] + ' tr:nth-child(' + (place + 2) + ')').addClass(activeStatus);
-	                }
-	            }
-	        }
-	    }
-	});
+    loadStandings(Drupal.settings.today.season_year);
+    for (i = Drupal.settings.today.season_year; i > 2015; i--){
+    	if ( i == Drupal.settings.today.season_year) {
+    		jQuery(".season-select").append('<option selected value="' + i + '">' + i + '-' + (i+1) + ' SEASON</option>')
+    	}
+    	else {
+    		jQuery(".season-select").append('<option value="' + i + '">' + i + '-' + (i+1) + ' SEASON</option>')
+    	}
+    }
+    jQuery(".season-select").change(function() {
+        loadStandings(jQuery(this).val());
+    });
 });
 
-jQuery('.west tr:nth-child(1)').html('<td>THDDL</td>');
+function loadStandings(year) {
+    jQuery.ajax({
+        url: 'http://data.nba.com/data/v2015/json/mobile_teams/nba/' + year + '/00_standings.json',
+        async: false,
+        success: function(standingsData) {
+            for (let i = 0; i < standingsData.sta.co.length; i++) {
+                for (let x = 0; x < standingsData.sta.co[i].di.length; x++) {
+                    for (let t = 0; t < standingsData.sta.co[i].di[x].t.length; t++) {
+                        var conferences = ['.east', '.west'];
+                        var place = standingsData.sta.co[i].di[x].t[t].see;
+                        var rowHTML = '';
+                        var activeStatus = '';
+                        if (standingsData.sta.co[i].di[x].t[t].see <= 8) {
+                            seed = standingsData.sta.co[i].di[x].t[t].see;
+                        }
+                        var index = ['see', 'w', 'l', 'gb', 'cr', 'dr', 'hr', 'ar', 'l10', 'str'];
+                        for (o = 0; o < index.length; o++) {
+                            if (o == 0) {
+                                rowHTML += '<td class=' + standingsData.sta.co[i].di[x].t[t].ta + '><p class="seed">' + standingsData.sta.co[i].di[x].t[t].see + '</p><div class="logo-wrap"><img class="logo" src=http://i.cdn.turner.com/nba/nba/assets/logos/teams/primary/web/' + standingsData.sta.co[i].di[x].t[t].ta + '.svg></div><p class="team-name">' + standingsData.sta.co[i].di[x].t[t].tc.toUpperCase() + ' ' + standingsData.sta.co[i].di[x].t[t].tn.toUpperCase() + '</p><p class="team-abbreviation">' + standingsData.sta.co[i].di[x].t[t].ta + '</p></td>';
+                            } else {
+                                rowHTML += '<td>' + standingsData.sta.co[i].di[x].t[t][index[o]] + '</td>';
+                            }
+                        }
+                        jQuery(conferences[i] + ' tr:nth-child(' + (place + 2) + ')').html(rowHTML);
+                        jQuery('tr').removeClass('active');
+                        if (standingsData.sta.co[i].di[x].t[t].ta == 'BOS') {
+      						jQuery(conferences[i] + ' tr:nth-child(' + (place + 2) + ')').addClass('active');
+                        }
+
+                    }
+                }
+            }
+        }
+    });
+}
 </script>
 <style>
 /***** USAGE *****
@@ -88,6 +101,11 @@ jQuery('.west tr:nth-child(1)').html('<td>THDDL</td>');
 .standings-wrap {
   position: relative; }
 
+.season-select {
+  margin-bottom: 20px;
+  width: 145px;
+  height: 30px; }
+
 .box-table-wrap, .loading-table-wrap {
   width: 100%;
   height: 100%;
@@ -101,11 +119,11 @@ jQuery('.west tr:nth-child(1)').html('<td>THDDL</td>');
       display: table; }
     @media (max-width: 600px) {
       .box-table-wrap table, .loading-table-wrap table {
-        margin-left: 87px;
+        margin-left: 75px;
         width: calc(100% + (550px - 100%)); } }
     @media (min-width: 601px) {
       .box-table-wrap table, .loading-table-wrap table {
-        margin-left: 130px;
+        margin-left: 180px;
         width: calc(100% + (680px - 100%)); } }
     .box-table-wrap table thead tr .boxStatsSorter-headerDesc, .loading-table-wrap table thead tr .boxStatsSorter-headerDesc {
       background-image: url("http://i.cdn.turner.com/drp/nba/celtics/sites/default/files/desc-light.gif");
@@ -120,15 +138,25 @@ jQuery('.west tr:nth-child(1)').html('<td>THDDL</td>');
       .box-table-wrap table thead tr .boxStatsSorter-header:hover, .loading-table-wrap table thead tr .boxStatsSorter-header:hover {
         box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.2); }
     .box-table-wrap table tr, .loading-table-wrap table tr {
-      width: 100%; }
+      width: 100%;
+      background-color: #fff; }
+      .box-table-wrap table tr.active, .loading-table-wrap table tr.active {
+        font-weight: 600;
+        background-color: #dddddd; }
+        .box-table-wrap table tr.active td, .loading-table-wrap table tr.active td {
+          background-color: #dddddd; }
       .box-table-wrap table tr:nth-of-type(even), .loading-table-wrap table tr:nth-of-type(even) {
         background-color: #fafafa; }
         .box-table-wrap table tr:nth-of-type(even) td:first-of-type, .loading-table-wrap table tr:nth-of-type(even) td:first-of-type {
           background-color: #fafafa; }
       .box-table-wrap table tr:first-of-type td:first-of-type, .loading-table-wrap table tr:first-of-type td:first-of-type {
         margin-top: 0px; }
+      .box-table-wrap table tr:nth-child(11) td, .loading-table-wrap table tr:nth-child(11) td {
+        border-top: 1px solid #a7a7a7; }
       .box-table-wrap table tr.dnp, .loading-table-wrap table tr.dnp {
         color: #babcbe; }
+      .box-table-wrap table tr img, .loading-table-wrap table tr img {
+        width: 25px; }
       .box-table-wrap table tr th, .loading-table-wrap table tr th {
         color: white;
         font-weight: 500; }
@@ -142,8 +170,11 @@ jQuery('.west tr:nth-child(1)').html('<td>THDDL</td>');
           margin-top: -1px;
           /*              width: 24%; // Minimize the blank cell issue
                           min-width: 150px; //Minimize the blank cell issue */
-          width: 200px;
+          width: 250px;
           font-weight: 500; }
+          @media (max-width: 600px) {
+            .box-table-wrap table tr th:first-of-type, .loading-table-wrap table tr th:first-of-type {
+              width: 130px; } }
       .box-table-wrap table tr td:first-of-type, .loading-table-wrap table tr td:first-of-type {
         position: absolute;
         overflow: hidden;
@@ -153,10 +184,38 @@ jQuery('.west tr:nth-child(1)').html('<td>THDDL</td>');
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        width: 200px;
+        width: 250px;
         font-weight: 500;
+        display: flex;
+        align-items: center;
         /*              width: 24%; // Minimize the blank cell issue
                         min-width: 150px; //Minimize the blank cell issue */ }
+        @media (max-width: 600px) {
+          .box-table-wrap table tr td:first-of-type, .loading-table-wrap table tr td:first-of-type {
+            width: 130px; } }
+        .box-table-wrap table tr td:first-of-type p, .loading-table-wrap table tr td:first-of-type p {
+          margin: 0; }
+        .box-table-wrap table tr td:first-of-type .seed, .loading-table-wrap table tr td:first-of-type .seed {
+          color: #a7a7a7;
+          flex-basis: 8%; }
+          @media (max-width: 600px) {
+            .box-table-wrap table tr td:first-of-type .seed, .loading-table-wrap table tr td:first-of-type .seed {
+              flex-basis: 14%; } }
+        .box-table-wrap table tr td:first-of-type .logo-wrap, .loading-table-wrap table tr td:first-of-type .logo-wrap {
+          flex-basis: 15%; }
+          @media (max-width: 600px) {
+            .box-table-wrap table tr td:first-of-type .logo-wrap, .loading-table-wrap table tr td:first-of-type .logo-wrap {
+              flex-basis: 33%; } }
+        .box-table-wrap table tr td:first-of-type .team-name, .loading-table-wrap table tr td:first-of-type .team-name {
+          display: block; }
+          @media (max-width: 600px) {
+            .box-table-wrap table tr td:first-of-type .team-name, .loading-table-wrap table tr td:first-of-type .team-name {
+              display: none; } }
+        .box-table-wrap table tr td:first-of-type .team-abbreviation, .loading-table-wrap table tr td:first-of-type .team-abbreviation {
+          display: none; }
+          @media (max-width: 600px) {
+            .box-table-wrap table tr td:first-of-type .team-abbreviation, .loading-table-wrap table tr td:first-of-type .team-abbreviation {
+              display: block; } }
     .box-table-wrap table th, .box-table-wrap table td, .loading-table-wrap table th, .loading-table-wrap table td {
       padding: 5px 10px 5px 10px;
       text-align: center;
@@ -249,11 +308,13 @@ a.on-current-roster {
   background-color: #c7314a; }
 
 </style>
+<select class="season-select">
+</select>
 <div class="standings-wrap">
 <div class="box-table-wrap east">
 	<table>
 		<tr>
-			<th>EAST</th>
+			<th style="text-overflow: ellipsis;">EASTERN CONFERENCE</th>
 			<th>W</th>
 			<th>L</th>
 			<th>GB</th>
@@ -264,6 +325,7 @@ a.on-current-roster {
 			<th>L10</th>
 			<th>STR</th>
 		</tr>
+		<tr></tr>
 		<tr></tr>
 		<tr></tr>
 		<tr></tr>
@@ -284,7 +346,7 @@ a.on-current-roster {
 <div class="box-table-wrap west">
 	<table>
 		<tr>
-			<th>WEST</th>
+			<th style="text-overflow: ellipsis;">WESTERN CONFERENCE</th>
 			<th>W</th>
 			<th>L</th>
 			<th>GB</th>
@@ -295,6 +357,7 @@ a.on-current-roster {
 			<th>L10</th>
 			<th>STR</th>
 		</tr>
+		<tr></tr>
 		<tr></tr>
 		<tr></tr>
 		<tr></tr>
