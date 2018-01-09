@@ -8,18 +8,16 @@ module.exports = function(grunt) {
 
     watch: {
       html: {
-        files: ['src/standings.html',
-                'src/html/*.html'],
-        tasks: ['htmlmin', 'import','notify:done']
+        files: ['src/standings.html', 'src/html/*.html'],
+        tasks: ['htmlmin', 'import', 'notify:done']
       },
       js: {
-        files: ['src/js/*.js'],
+        files: ['src/js/*.jsx'],
         tasks: ['browserify', 'import', 'notify:done']
       },
       css: {
-        files: ['src/scss/*.scss',
-                'src/scss/mixins/*.scss'],
-        tasks: ['sass', 'import','notify:done']
+        files: ['src/scss/*.scss', 'src/scss/mixins/*.scss'],
+        tasks: ['sass', 'import', 'notify:done']
       }
     },
 
@@ -28,19 +26,19 @@ module.exports = function(grunt) {
     ===================================*/
 
     htmlmin: {
-       dist: {
-         options: {
-           gruntLogHeader: false,
-           removeComments: true,
-           collapseWhitespace: true
-         },
-         files: {
-           'src/html/min/template.min.html': 'src/html/template.html' // CHANGE TEMPLATE NAME
-         }
-       }
-     },
+      dist: {
+        options: {
+          gruntLogHeader: false,
+          removeComments: true,
+          collapseWhitespace: true
+        },
+        files: {
+          'src/html/min/template.min.html': 'src/html/template.html' // CHANGE TEMPLATE NAME
+        }
+      }
+    },
 
-     /*====================================
+    /*====================================
      =            COMPILE SASS            =
      ====================================*/
 
@@ -48,7 +46,7 @@ module.exports = function(grunt) {
       dist: {
         options: {
           gruntLogHeader: false,
-          sourcemap: 'none',
+          sourcemap: 'none'
         },
         files: {
           'dist/css/standings.css': 'src/scss/standings.scss'
@@ -73,7 +71,7 @@ module.exports = function(grunt) {
     uglify: {
       dist: {
         files: {
-          'dist/js/standings.min.js': 'dist/js/standings.js'
+          'dist/js/standings.min.jsx': 'dist/js/standings.jsx'
         }
       }
     },
@@ -88,8 +86,8 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/js/standings.js' : 'src/js/standings.js',
-          'dist/standings.ready.html' : 'src/standings.html'
+          'dist/js/standings.jsx': 'src/js/standings.jsx',
+          'dist/standings.ready.html': 'src/standings.html'
         }
       }
     },
@@ -99,16 +97,14 @@ module.exports = function(grunt) {
     ==================================*/
 
     browserify: {
-        dev: {
-            src: [
-                "src/js/standings.js"
-            ],
-            dest: 'dist/js/standings.js',
-            options: {
-                browserifyOptions: { debug: true },
-                transform: [["babelify", { "presets": ["env"] }]],
-            }
+      dev: {
+        src: ['src/js/standings.jsx'],
+        dest: 'dist/js/standings.js',
+        options: {
+          browserifyOptions: { debug: true },
+          transform: [['babelify', { presets: ['env'] }]]
         }
+      }
     },
 
     /*==============================
@@ -120,7 +116,7 @@ module.exports = function(grunt) {
         options: {
           gruntLogHeader: false,
           title: 'Grunt - standings',
-          message: 'DONE!',
+          message: 'DONE!'
         }
       }
     }
@@ -139,5 +135,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-notify');
-  grunt.registerTask('default',['watch']);
+  grunt.registerTask('default', ['watch']);
 };

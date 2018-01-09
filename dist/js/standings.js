@@ -1,50 +1,52 @@
-jQuery(document).ready(function() {
-    loadStandings(Drupal.settings.today.season_year);
-    for (i = Drupal.settings.today.season_year; i > 2015; i--){
-    	if ( i == Drupal.settings.today.season_year) {
-    		jQuery(".season-select").append('<option selected value="' + i + '">' + i + '-' + (i+1) + ' SEASON</option>')
-    	}
-    	else {
-    		jQuery(".season-select").append('<option value="' + i + '">' + i + '-' + (i+1) + ' SEASON</option>')
-    	}
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
+
+jQuery(document).ready(function () {
+  loadStandings(Drupal.settings.today.season_year);
+  for (var i = Drupal.settings.today.season_year; i > 2015; i--) {
+    if (i == Drupal.settings.today.season_year) {
+      jQuery('.season-select').append('<option selected value="' + i + '">' + i + '-' + (i + 1) + ' SEASON</option>');
+    } else {
+      jQuery('.season-select').append('<option value="' + i + '">' + i + '-' + (i + 1) + ' SEASON</option>');
     }
-    jQuery(".season-select").change(function() {
-        loadStandings(jQuery(this).val());
-    });
+  }
+  jQuery('.season-select').change(function () {
+    loadStandings(jQuery(this).val());
+  });
 });
 
 function loadStandings(year) {
-    jQuery.ajax({
-        url: 'http://data.nba.com/data/v2015/json/mobile_teams/nba/' + year + '/00_standings.json',
-        async: false,
-        success: function(standingsData) {
-            for (let i = 0; i < standingsData.sta.co.length; i++) {
-                for (let x = 0; x < standingsData.sta.co[i].di.length; x++) {
-                    for (let t = 0; t < standingsData.sta.co[i].di[x].t.length; t++) {
-                        var conferences = ['.east', '.west'];
-                        var place = standingsData.sta.co[i].di[x].t[t].see;
-                        var rowHTML = '';
-                        var activeStatus = '';
-                        if (standingsData.sta.co[i].di[x].t[t].see <= 8) {
-                            seed = standingsData.sta.co[i].di[x].t[t].see;
-                        }
-                        var index = ['see', 'w', 'l', 'gb', 'cr', 'dr', 'hr', 'ar', 'l10', 'str'];
-                        for (o = 0; o < index.length; o++) {
-                            if (o == 0) {
-                                rowHTML += '<td class=' + standingsData.sta.co[i].di[x].t[t].ta + '><p class="seed">' + standingsData.sta.co[i].di[x].t[t].see + '</p><div class="logo-wrap"><img class="logo" src=http://i.cdn.turner.com/nba/nba/assets/logos/teams/primary/web/' + standingsData.sta.co[i].di[x].t[t].ta + '.svg></div><p class="team-name">' + standingsData.sta.co[i].di[x].t[t].tc.toUpperCase() + ' ' + standingsData.sta.co[i].di[x].t[t].tn.toUpperCase() + '</p><p class="team-abbreviation">' + standingsData.sta.co[i].di[x].t[t].ta + '</p></td>';
-                            } else {
-                                rowHTML += '<td>' + standingsData.sta.co[i].di[x].t[t][index[o]] + '</td>';
-                            }
-                        }
-                        jQuery(conferences[i] + ' tr:nth-child(' + (place + 2) + ')').html(rowHTML);
-                        jQuery('tr').removeClass('active');
-                        if (standingsData.sta.co[i].di[x].t[t].ta == 'BOS') {
-      						jQuery(conferences[i] + ' tr:nth-child(' + (place + 2) + ')').addClass('active');
-                        }
-
-                    }
-                }
+  jQuery.ajax({
+    url: 'http://data.nba.com/data/v2015/json/mobile_teams/nba/' + year + '/00_standings.json',
+    async: false,
+    success: function success(standingsData) {
+      for (var i = 0; i < standingsData.sta.co.length; i++) {
+        for (var x = 0; x < standingsData.sta.co[i].di.length; x++) {
+          for (var t = 0; t < standingsData.sta.co[i].di[x].t.length; t++) {
+            var conferences = ['.east', '.west'];
+            var place = standingsData.sta.co[i].di[x].t[t].see;
+            var rowHTML = '';
+            var activeStatus = '';
+            var index = ['see', 'w', 'l', 'gb', 'cr', 'dr', 'hr', 'ar', 'l10', 'str'];
+            for (var o = 0; o < index.length; o++) {
+              if (o == 0) {
+                rowHTML += '\n                  <td class="' + standingsData.sta.co[i].di[x].t[t].ta + '">\n                    <p class="seed">' + standingsData.sta.co[i].di[x].t[t].see + '</p>\n                    <div class="logo-wrap">\n                      <img class="logo" src="http://i.cdn.turner.com/nba/nba/assets/logos/teams/primary/web/' + standingsData.sta.co[i].di[x].t[t].ta + '.svg"/>\n                    </div>\n                    <p class="team-name">' + standingsData.sta.co[i].di[x].t[t].tc.toUpperCase() + ' ' + standingsData.sta.co[i].di[x].t[t].tn.toUpperCase() + '</p>\n                    <p class="team-abbreviation">' + standingsData.sta.co[i].di[x].t[t].ta + '</p>\n                  </td>\n                  ';
+              } else {
+                rowHTML += '<td>' + standingsData.sta.co[i].di[x].t[t][index[o]] + '</td>';
+              }
             }
+            jQuery(conferences[i] + ' tr:nth-child(' + (place + 2) + ')').html(rowHTML);
+            jQuery('tr').removeClass('active');
+
+            if (standingsData.sta.co[i].di[x].t[t].ta == 'BOS') {
+              jQuery(conferences[i] + ' tr:nth-child(' + (place + 2) + ')').addClass('active');
+            }
+          }
         }
-    });
+      }
+    }
+  });
 }
+
+},{}]},{},[1])
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5vZGVfbW9kdWxlcy9icm93c2VyLXBhY2svX3ByZWx1ZGUuanMiLCJzcmMvanMvc3RhbmRpbmdzLmpzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7O0FDQUEsT0FBTyxRQUFQLEVBQWlCLEtBQWpCLENBQXVCLFlBQVc7QUFDaEMsZ0JBQWMsT0FBTyxRQUFQLENBQWdCLEtBQWhCLENBQXNCLFdBQXBDO0FBQ0EsT0FBSyxJQUFJLElBQUksT0FBTyxRQUFQLENBQWdCLEtBQWhCLENBQXNCLFdBQW5DLEVBQWdELElBQUksSUFBcEQsRUFBMEQsR0FBMUQsRUFBK0Q7QUFDN0QsUUFBSSxLQUFLLE9BQU8sUUFBUCxDQUFnQixLQUFoQixDQUFzQixXQUEvQixFQUE0QztBQUMxQyxhQUFPLGdCQUFQLEVBQXlCLE1BQXpCLENBQWdDLDZCQUE2QixDQUE3QixHQUFpQyxJQUFqQyxHQUF3QyxDQUF4QyxHQUE0QyxHQUE1QyxJQUFtRCxJQUFJLENBQXZELElBQTRELGtCQUE1RjtBQUNELEtBRkQsTUFFTztBQUNMLGFBQU8sZ0JBQVAsRUFBeUIsTUFBekIsQ0FBZ0Msb0JBQW9CLENBQXBCLEdBQXdCLElBQXhCLEdBQStCLENBQS9CLEdBQW1DLEdBQW5DLElBQTBDLElBQUksQ0FBOUMsSUFBbUQsa0JBQW5GO0FBQ0Q7QUFDRjtBQUNELFNBQU8sZ0JBQVAsRUFBeUIsTUFBekIsQ0FBZ0MsWUFBVztBQUN6QyxrQkFBYyxPQUFPLElBQVAsRUFBYSxHQUFiLEVBQWQ7QUFDRCxHQUZEO0FBR0QsQ0FaRDs7QUFjQSxTQUFTLGFBQVQsQ0FBdUIsSUFBdkIsRUFBNkI7QUFDM0IsU0FBTyxJQUFQLENBQVk7QUFDVixTQUFLLDBEQUEwRCxJQUExRCxHQUFpRSxvQkFENUQ7QUFFVixXQUFPLEtBRkc7QUFHVixhQUFTLGlCQUFTLGFBQVQsRUFBd0I7QUFDL0IsV0FBSyxJQUFJLElBQUksQ0FBYixFQUFnQixJQUFJLGNBQWMsR0FBZCxDQUFrQixFQUFsQixDQUFxQixNQUF6QyxF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QUFrRCxHQUF6RCxFQUE4RCxRQUE5RCxDQUF1RSxRQUF2RTtBQUNEO0FBQ0Y7QUFDRjtBQUNGO0FBQ0Y7QUFyQ1MsR0FBWjtBQXVDRCIsImZpbGUiOiJnZW5lcmF0ZWQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlc0NvbnRlbnQiOlsiKGZ1bmN0aW9uIGUodCxuLHIpe2Z1bmN0aW9uIHMobyx1KXtpZighbltvXSl7aWYoIXRbb10pe3ZhciBhPXR5cGVvZiByZXF1aXJlPT1cImZ1bmN0aW9uXCImJnJlcXVpcmU7aWYoIXUmJmEpcmV0dXJuIGEobywhMCk7aWYoaSlyZXR1cm4gaShvLCEwKTt2YXIgZj1uZXcgRXJyb3IoXCJDYW5ub3QgZmluZCBtb2R1bGUgJ1wiK28rXCInXCIpO3Rocm93IGYuY29kZT1cIk1PRFVMRV9OT1RfRk9VTkRcIixmfXZhciBsPW5bb109e2V4cG9ydHM6e319O3Rbb11bMF0uY2FsbChsLmV4cG9ydHMsZnVuY3Rpb24oZSl7dmFyIG49dFtvXVsxXVtlXTtyZXR1cm4gcyhuP246ZSl9LGwsbC5leHBvcnRzLGUsdCxuLHIpfXJldHVybiBuW29dLmV4cG9ydHN9dmFyIGk9dHlwZW9mIHJlcXVpcmU9PVwiZnVuY3Rpb25cIiYmcmVxdWlyZTtmb3IodmFyIG89MDtvPHIubGVuZ3RoO28rKylzKHJbb10pO3JldHVybiBzfSkiLCJqUXVlcnkoZG9jdW1lbnQpLnJlYWR5KGZ1bmN0aW9uKCkge1xuICBsb2FkU3RhbmRpbmdzKERydXBhbC5zZXR0aW5ncy50b2RheS5zZWFzb25feWVhcik7XG4gIGZvciAodmFyIGkgPSBEcnVwYWwuc2V0dGluZ3MudG9kYXkuc2Vhc29uX3llYXI7IGkgPiAyMDE1OyBpLS0pIHtcbiAgICBpZiAoaSA9PSBEcnVwYWwuc2V0dGluZ3MudG9kYXkuc2Vhc29uX3llYXIpIHtcbiAgICAgIGpRdWVyeSgnLnNlYXNvbi1zZWxlY3QnKS5hcHBlbmQoJzxvcHRpb24gc2VsZWN0ZWQgdmFsdWU9XCInICsgaSArICdcIj4nICsgaSArICctJyArIChpICsgMSkgKyAnIFNFQVNPTjwvb3B0aW9uPicpO1xuICAgIH0gZWxzZSB7XG4gICAgICBqUXVlcnkoJy5zZWFzb24tc2VsZWN0JykuYXBwZW5kKCc8b3B0aW9uIHZhbHVlPVwiJyArIGkgKyAnXCI+JyArIGkgKyAnLScgKyAoaSArIDEpICsgJyBTRUFTT048L29wdGlvbj4nKTtcbiAgICB9XG4gIH1cbiAgalF1ZXJ5KCcuc2Vhc29uLXNlbGVjdCcpLmNoYW5nZShmdW5jdGlvbigpIHtcbiAgICBsb2FkU3RhbmRpbmdzKGpRdWVyeSh0aGlzKS52YWwoKSk7XG4gIH0pO1xufSk7XG5cbmZ1bmN0aW9uIGxvYWRTdGFuZGluZ3MoeWVhcikge1xuICBqUXVlcnkuYWpheCh7XG4gICAgdXJsOiAnaHR0cDovL2RhdGEubmJhLmNvbS9kYXRhL3YyMDE1L2pzb24vbW9iaWxlX3RlYW1zL25iYS8nICsgeWVhciArICcvMDBfc3RhbmRpbmdzLmpzb24nLFxuICAgIGFzeW5jOiBmYWxzZSxcbiAgICBzdWNjZXNzOiBmdW5jdGlvbihzdGFuZGluZ3NEYXRhKSB7XG4gICAgICBmb3IgKGxldCBpID0gMDsgaSA8IHN0YW5kaW5nc0RhdGEuc3RhLmNvLmxlbmd0aDsgaSsrKSB7XG4gICAgICAgIGZvciAobGV0IHggPSAwOyB4IDwgc3RhbmRpbmdzRGF0YS5zdGEuY29baV0uZGkubGVuZ3RoOyB4KyspIHtcbiAgICAgICAgICBmb3IgKGxldCB0ID0gMDsgdCA8IHN0YW5kaW5nc0RhdGEuc3RhLmNvW2ldLmRpW3hdLnQubGVuZ3RoOyB0KyspIHtcbiAgICAgICAgICAgIHZhciBjb25mZXJlbmNlcyA9IFsnLmVhc3QnLCAnLndlc3QnXTtcbiAgICAgICAgICAgIHZhciBwbGFjZSA9IHN0YW5kaW5nc0RhdGEuc3RhLmNvW2ldLmRpW3hdLnRbdF0uc2VlO1xuICAgICAgICAgICAgdmFyIHJvd0hUTUwgPSAnJztcbiAgICAgICAgICAgIHZhciBhY3RpdmVTdGF0dXMgPSAnJztcbiAgICAgICAgICAgIHZhciBpbmRleCA9IFsnc2VlJywgJ3cnLCAnbCcsICdnYicsICdjcicsICdkcicsICdocicsICdhcicsICdsMTAnLCAnc3RyJ107XG4gICAgICAgICAgICBmb3IgKGxldCBvID0gMDsgbyA8IGluZGV4Lmxlbmd0aDsgbysrKSB7XG4gICAgICAgICAgICAgIGlmIChvID09IDApIHtcbiAgICAgICAgICAgICAgICByb3dIVE1MICs9IGBcbiAgICAgICAgICAgICAgICAgIDx0ZCBjbGFzcz1cIiR7c3RhbmRpbmdzRGF0YS5zdGEuY29baV0uZGlbeF0udFt0XS50YX1cIj5cbiAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3M9XCJzZWVkXCI+JHtzdGFuZGluZ3NEYXRhLnN0YS5jb1tpXS5kaVt4XS50W3RdLnNlZX08L3A+XG4gICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XCJsb2dvLXdyYXBcIj5cbiAgICAgICAgICAgICAgICAgICAgICA8aW1nIGNsYXNzPVwibG9nb1wiIHNyYz1cImh0dHA6Ly9pLmNkbi50dXJuZXIuY29tL25iYS9uYmEvYXNzZXRzL2xvZ29zL3RlYW1zL3ByaW1hcnkvd2ViLyR7c3RhbmRpbmdzRGF0YS5zdGEuY29baV0uZGlbeF0udFt0XS50YX0uc3ZnXCIvPlxuICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3M9XCJ0ZWFtLW5hbWVcIj4ke3N0YW5kaW5nc0RhdGEuc3RhLmNvW2ldLmRpW3hdLnRbdF0udGMudG9VcHBlckNhc2UoKX0gJHtzdGFuZGluZ3NEYXRhLnN0YS5jb1tpXS5kaVt4XS50W3RdLnRuLnRvVXBwZXJDYXNlKCl9PC9wPlxuICAgICAgICAgICAgICAgICAgICA8cCBjbGFzcz1cInRlYW0tYWJicmV2aWF0aW9uXCI+JHtzdGFuZGluZ3NEYXRhLnN0YS5jb1tpXS5kaVt4XS50W3RdLnRhfTwvcD5cbiAgICAgICAgICAgICAgICAgIDwvdGQ+XG4gICAgICAgICAgICAgICAgICBgO1xuICAgICAgICAgICAgICB9IGVsc2Uge1xuICAgICAgICAgICAgICAgIHJvd0hUTUwgKz0gJzx0ZD4nICsgc3RhbmRpbmdzRGF0YS5zdGEuY29baV0uZGlbeF0udFt0XVtpbmRleFtvXV0gKyAnPC90ZD4nO1xuICAgICAgICAgICAgICB9XG4gICAgICAgICAgICB9XG4gICAgICAgICAgICBqUXVlcnkoY29uZmVyZW5jZXNbaV0gKyAnIHRyOm50aC1jaGlsZCgnICsgKHBsYWNlICsgMikgKyAnKScpLmh0bWwocm93SFRNTCk7XG4gICAgICAgICAgICBqUXVlcnkoJ3RyJykucmVtb3ZlQ2xhc3MoJ2FjdGl2ZScpO1xuXG4gICAgICAgICAgICBpZiAoc3RhbmRpbmdzRGF0YS5zdGEuY29baV0uZGlbeF0udFt0XS50YSA9PSAnQk9TJykge1xuICAgICAgICAgICAgICBqUXVlcnkoY29uZmVyZW5jZXNbaV0gKyAnIHRyOm50aC1jaGlsZCgnICsgKHBsYWNlICsgMikgKyAnKScpLmFkZENsYXNzKCdhY3RpdmUnKTtcbiAgICAgICAgICAgIH1cbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH0pO1xufVxuIl19

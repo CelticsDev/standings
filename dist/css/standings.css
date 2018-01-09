@@ -50,61 +50,81 @@
   width: 145px;
   height: 30px; }
 
-.box-table-wrap, .loading-table-wrap {
+.box-table-wrap,
+.loading-table-wrap {
   width: 100%;
   height: 100%;
   overflow-x: scroll;
   margin-bottom: 20px; }
-  .box-table-wrap table, .loading-table-wrap table {
+  .box-table-wrap table,
+  .loading-table-wrap table {
     color: #6c6d6f;
     overflow: hidden;
     table-layout: fixed; }
-    .box-table-wrap table.active, .loading-table-wrap table.active {
+    .box-table-wrap table.active,
+    .loading-table-wrap table.active {
       display: table; }
     @media (max-width: 600px) {
-      .box-table-wrap table, .loading-table-wrap table {
+      .box-table-wrap table,
+      .loading-table-wrap table {
         margin-left: 75px;
         width: calc(100% + (550px - 100%)); } }
     @media (min-width: 601px) {
-      .box-table-wrap table, .loading-table-wrap table {
+      .box-table-wrap table,
+      .loading-table-wrap table {
         margin-left: 180px;
         width: calc(100% + (680px - 100%)); } }
-    .box-table-wrap table thead tr .boxStatsSorter-headerDesc, .loading-table-wrap table thead tr .boxStatsSorter-headerDesc {
+    .box-table-wrap table thead tr .boxStatsSorter-headerDesc,
+    .loading-table-wrap table thead tr .boxStatsSorter-headerDesc {
       background-image: url("http://i.cdn.turner.com/drp/nba/celtics/sites/default/files/desc-light.gif");
       box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.2); }
-    .box-table-wrap table thead tr .boxStatsSorter-headerAsc, .loading-table-wrap table thead tr .boxStatsSorter-headerAsc {
+    .box-table-wrap table thead tr .boxStatsSorter-headerAsc,
+    .loading-table-wrap table thead tr .boxStatsSorter-headerAsc {
       background-image: url("http://i.cdn.turner.com/drp/nba/celtics/sites/default/files/asc-light.gif");
       box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.2); }
-    .box-table-wrap table thead tr .boxStatsSorter-header, .loading-table-wrap table thead tr .boxStatsSorter-header {
+    .box-table-wrap table thead tr .boxStatsSorter-header,
+    .loading-table-wrap table thead tr .boxStatsSorter-header {
       background-repeat: no-repeat;
       background-position-y: 25px;
       background-position-x: center; }
-      .box-table-wrap table thead tr .boxStatsSorter-header:hover, .loading-table-wrap table thead tr .boxStatsSorter-header:hover {
+      .box-table-wrap table thead tr .boxStatsSorter-header:hover,
+      .loading-table-wrap table thead tr .boxStatsSorter-header:hover {
         box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.2); }
-    .box-table-wrap table tr, .loading-table-wrap table tr {
+    .box-table-wrap table tr,
+    .loading-table-wrap table tr {
       width: 100%;
       background-color: #fff; }
-      .box-table-wrap table tr.active, .loading-table-wrap table tr.active {
+      .box-table-wrap table tr.active,
+      .loading-table-wrap table tr.active {
         font-weight: 600;
         background-color: #dddddd; }
-        .box-table-wrap table tr.active td, .loading-table-wrap table tr.active td {
+        .box-table-wrap table tr.active td,
+        .loading-table-wrap table tr.active td {
           background-color: #dddddd; }
-      .box-table-wrap table tr:nth-of-type(even), .loading-table-wrap table tr:nth-of-type(even) {
+      .box-table-wrap table tr:nth-of-type(even),
+      .loading-table-wrap table tr:nth-of-type(even) {
         background-color: #fafafa; }
-        .box-table-wrap table tr:nth-of-type(even) td:first-of-type, .loading-table-wrap table tr:nth-of-type(even) td:first-of-type {
+        .box-table-wrap table tr:nth-of-type(even) td:first-of-type,
+        .loading-table-wrap table tr:nth-of-type(even) td:first-of-type {
           background-color: #fafafa; }
-      .box-table-wrap table tr:first-of-type td:first-of-type, .loading-table-wrap table tr:first-of-type td:first-of-type {
+      .box-table-wrap table tr:first-of-type td:first-of-type,
+      .loading-table-wrap table tr:first-of-type td:first-of-type {
         margin-top: 0px; }
-      .box-table-wrap table tr:nth-child(11) td, .loading-table-wrap table tr:nth-child(11) td {
+      .box-table-wrap table tr:nth-child(11) td,
+      .loading-table-wrap table tr:nth-child(11) td {
         border-top: 1px solid #a7a7a7; }
-      .box-table-wrap table tr.dnp, .loading-table-wrap table tr.dnp {
+      .box-table-wrap table tr.dnp,
+      .loading-table-wrap table tr.dnp {
         color: #babcbe; }
-      .box-table-wrap table tr img, .loading-table-wrap table tr img {
+      .box-table-wrap table tr img,
+      .loading-table-wrap table tr img {
         width: 25px; }
-      .box-table-wrap table tr th, .loading-table-wrap table tr th {
+      .box-table-wrap table tr th,
+      .loading-table-wrap table tr th {
         color: white;
         font-weight: 500; }
-        .box-table-wrap table tr th:first-of-type, .loading-table-wrap table tr th:first-of-type {
+        .box-table-wrap table tr th:first-of-type,
+        .loading-table-wrap table tr th:first-of-type {
           position: absolute;
           overflow: hidden;
           left: 0;
@@ -113,13 +133,15 @@
           border-right: none;
           margin-top: -1px;
           /*              width: 24%; // Minimize the blank cell issue
-                          min-width: 150px; //Minimize the blank cell issue */
+                                    min-width: 150px; //Minimize the blank cell issue */
           width: 250px;
           font-weight: 500; }
           @media (max-width: 600px) {
-            .box-table-wrap table tr th:first-of-type, .loading-table-wrap table tr th:first-of-type {
+            .box-table-wrap table tr th:first-of-type,
+            .loading-table-wrap table tr th:first-of-type {
               width: 130px; } }
-      .box-table-wrap table tr td:first-of-type, .loading-table-wrap table tr td:first-of-type {
+      .box-table-wrap table tr td:first-of-type,
+      .loading-table-wrap table tr td:first-of-type {
         position: absolute;
         overflow: hidden;
         left: 0;
@@ -133,80 +155,114 @@
         display: flex;
         align-items: center;
         /*              width: 24%; // Minimize the blank cell issue
-                        min-width: 150px; //Minimize the blank cell issue */ }
+                                  min-width: 150px; //Minimize the blank cell issue */ }
         @media (max-width: 600px) {
-          .box-table-wrap table tr td:first-of-type, .loading-table-wrap table tr td:first-of-type {
+          .box-table-wrap table tr td:first-of-type,
+          .loading-table-wrap table tr td:first-of-type {
             width: 130px; } }
-        .box-table-wrap table tr td:first-of-type p, .loading-table-wrap table tr td:first-of-type p {
+        .box-table-wrap table tr td:first-of-type p,
+        .loading-table-wrap table tr td:first-of-type p {
           margin: 0; }
-        .box-table-wrap table tr td:first-of-type .seed, .loading-table-wrap table tr td:first-of-type .seed {
+        .box-table-wrap table tr td:first-of-type .seed,
+        .loading-table-wrap table tr td:first-of-type .seed {
           color: #a7a7a7;
           flex-basis: 8%; }
           @media (max-width: 600px) {
-            .box-table-wrap table tr td:first-of-type .seed, .loading-table-wrap table tr td:first-of-type .seed {
+            .box-table-wrap table tr td:first-of-type .seed,
+            .loading-table-wrap table tr td:first-of-type .seed {
               flex-basis: 14%; } }
-        .box-table-wrap table tr td:first-of-type .logo-wrap, .loading-table-wrap table tr td:first-of-type .logo-wrap {
+        .box-table-wrap table tr td:first-of-type .logo-wrap,
+        .loading-table-wrap table tr td:first-of-type .logo-wrap {
           flex-basis: 15%; }
           @media (max-width: 600px) {
-            .box-table-wrap table tr td:first-of-type .logo-wrap, .loading-table-wrap table tr td:first-of-type .logo-wrap {
+            .box-table-wrap table tr td:first-of-type .logo-wrap,
+            .loading-table-wrap table tr td:first-of-type .logo-wrap {
               flex-basis: 33%; } }
-        .box-table-wrap table tr td:first-of-type .team-name, .loading-table-wrap table tr td:first-of-type .team-name {
+        .box-table-wrap table tr td:first-of-type .team-name,
+        .loading-table-wrap table tr td:first-of-type .team-name {
           display: block; }
           @media (max-width: 600px) {
-            .box-table-wrap table tr td:first-of-type .team-name, .loading-table-wrap table tr td:first-of-type .team-name {
+            .box-table-wrap table tr td:first-of-type .team-name,
+            .loading-table-wrap table tr td:first-of-type .team-name {
               display: none; } }
-        .box-table-wrap table tr td:first-of-type .team-abbreviation, .loading-table-wrap table tr td:first-of-type .team-abbreviation {
+        .box-table-wrap table tr td:first-of-type .team-abbreviation,
+        .loading-table-wrap table tr td:first-of-type .team-abbreviation {
           display: none; }
           @media (max-width: 600px) {
-            .box-table-wrap table tr td:first-of-type .team-abbreviation, .loading-table-wrap table tr td:first-of-type .team-abbreviation {
+            .box-table-wrap table tr td:first-of-type .team-abbreviation,
+            .loading-table-wrap table tr td:first-of-type .team-abbreviation {
               display: block; } }
-    .box-table-wrap table th, .box-table-wrap table td, .loading-table-wrap table th, .loading-table-wrap table td {
+    .box-table-wrap table th,
+    .box-table-wrap table td,
+    .loading-table-wrap table th,
+    .loading-table-wrap table td {
       padding: 5px 10px 5px 10px;
       text-align: center;
       white-space: nowrap;
       font-size: 14px; }
-      .box-table-wrap table th.inactive, .box-table-wrap table td.inactive, .loading-table-wrap table th.inactive, .loading-table-wrap table td.inactive {
+      .box-table-wrap table th.inactive,
+      .box-table-wrap table td.inactive,
+      .loading-table-wrap table th.inactive,
+      .loading-table-wrap table td.inactive {
         display: none; }
-      .box-table-wrap table th:first-child, .box-table-wrap table td:first-child, .loading-table-wrap table th:first-child, .loading-table-wrap table td:first-child {
+      .box-table-wrap table th:first-child,
+      .box-table-wrap table td:first-child,
+      .loading-table-wrap table th:first-child,
+      .loading-table-wrap table td:first-child {
         text-align: left; }
-    .box-table-wrap table h3, .loading-table-wrap table h3 {
+    .box-table-wrap table h3,
+    .loading-table-wrap table h3 {
       border-bottom: none; }
-    .box-table-wrap table .tablesorter-childRow td:not(:first-child):not(:nth-child(2)), .loading-table-wrap table .tablesorter-childRow td:not(:first-child):not(:nth-child(2)) {
-      opacity: .5; }
-    .box-table-wrap table::-webkit-scrollbar, .loading-table-wrap table::-webkit-scrollbar {
+    .box-table-wrap table .tablesorter-childRow td:not(:first-child):not(:nth-child(2)),
+    .loading-table-wrap table .tablesorter-childRow td:not(:first-child):not(:nth-child(2)) {
+      opacity: 0.5; }
+    .box-table-wrap table::-webkit-scrollbar,
+    .loading-table-wrap table::-webkit-scrollbar {
       -webkit-appearance: none; }
-    .box-table-wrap table::-webkit-scrollbar:vertical, .loading-table-wrap table::-webkit-scrollbar:vertical {
+    .box-table-wrap table::-webkit-scrollbar:vertical,
+    .loading-table-wrap table::-webkit-scrollbar:vertical {
       width: 11px; }
-    .box-table-wrap table::-webkit-scrollbar:horizontal, .loading-table-wrap table::-webkit-scrollbar:horizontal {
+    .box-table-wrap table::-webkit-scrollbar:horizontal,
+    .loading-table-wrap table::-webkit-scrollbar:horizontal {
       height: 11px; }
-    .box-table-wrap table::-webkit-scrollbar-thumb, .loading-table-wrap table::-webkit-scrollbar-thumb {
+    .box-table-wrap table::-webkit-scrollbar-thumb,
+    .loading-table-wrap table::-webkit-scrollbar-thumb {
       border-radius: 8px;
       border: 2px solid white;
       /* should match background, can't be transparent */
       background-color: rgba(0, 0, 0, 0.5); }
-    .box-table-wrap table::-webkit-scrollbar-track, .loading-table-wrap table::-webkit-scrollbar-track {
+    .box-table-wrap table::-webkit-scrollbar-track,
+    .loading-table-wrap table::-webkit-scrollbar-track {
       background-color: #fff;
       border-radius: 8px; }
-    .box-table-wrap table.loading, .loading-table-wrap table.loading {
+    .box-table-wrap table.loading,
+    .loading-table-wrap table.loading {
       border-width: 0px 1px 1px 1px;
       border-color: #dddddd;
       border-style: solid; }
-      .box-table-wrap table.loading::-webkit-scrollbar:vertical, .loading-table-wrap table.loading::-webkit-scrollbar:vertical {
+      .box-table-wrap table.loading::-webkit-scrollbar:vertical,
+      .loading-table-wrap table.loading::-webkit-scrollbar:vertical {
         width: 0px; }
-      .box-table-wrap table.loading::-webkit-scrollbar:horizontal, .loading-table-wrap table.loading::-webkit-scrollbar:horizontal {
+      .box-table-wrap table.loading::-webkit-scrollbar:horizontal,
+      .loading-table-wrap table.loading::-webkit-scrollbar:horizontal {
         height: 0px; }
-  .box-table-wrap::-webkit-scrollbar, .loading-table-wrap::-webkit-scrollbar {
+  .box-table-wrap::-webkit-scrollbar,
+  .loading-table-wrap::-webkit-scrollbar {
     -webkit-appearance: none; }
-  .box-table-wrap::-webkit-scrollbar:vertical, .loading-table-wrap::-webkit-scrollbar:vertical {
+  .box-table-wrap::-webkit-scrollbar:vertical,
+  .loading-table-wrap::-webkit-scrollbar:vertical {
     width: 11px; }
-  .box-table-wrap::-webkit-scrollbar:horizontal, .loading-table-wrap::-webkit-scrollbar:horizontal {
+  .box-table-wrap::-webkit-scrollbar:horizontal,
+  .loading-table-wrap::-webkit-scrollbar:horizontal {
     height: 11px; }
-  .box-table-wrap::-webkit-scrollbar-thumb, .loading-table-wrap::-webkit-scrollbar-thumb {
+  .box-table-wrap::-webkit-scrollbar-thumb,
+  .loading-table-wrap::-webkit-scrollbar-thumb {
     border-radius: 8px;
     border: 2px solid white;
     /* should match background, can't be transparent */
     background-color: rgba(0, 0, 0, 0.5); }
-  .box-table-wrap::-webkit-scrollbar-track, .loading-table-wrap::-webkit-scrollbar-track {
+  .box-table-wrap::-webkit-scrollbar-track,
+  .loading-table-wrap::-webkit-scrollbar-track {
     background-color: #fff;
     border-radius: 8px; }
 
@@ -214,9 +270,11 @@
   margin-bottom: 15px; }
   .filter-wrap label {
     margin: 0; }
-  .filter-wrap .needs-loading, .filter-wrap .loading {
+  .filter-wrap .needs-loading,
+  .filter-wrap .loading {
     display: none; }
-    .filter-wrap .needs-loading.active, .filter-wrap .loading.active {
+    .filter-wrap .needs-loading.active,
+    .filter-wrap .loading.active {
       display: block; }
   .filter-wrap .loading {
     opacity: 0.5; }
