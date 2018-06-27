@@ -20,7 +20,7 @@ function loadStandings(year) {
                   <td class="${standingsData.sta.co[i].di[x].t[t].ta}">
                     <p class="seed">${standingsData.sta.co[i].di[x].t[t].see}</p>
                     <div class="logo-wrap">
-                      <img class="logo" src="http://i.cdn.turner.com/nba/nba/assets/logos/teams/primary/web/${standingsData.sta.co[i].di[x].t[t].ta}.svg"/>
+                      <img class="logo" src="https://i.cdn.turner.com/nba/nba/assets/logos/teams/primary/web/${standingsData.sta.co[i].di[x].t[t].ta}.svg"/>
                     </div>
                     <p class="team-name">${standingsData.sta.co[i].di[x].t[t].tc.toUpperCase()} ${standingsData.sta.co[i].di[x].t[t].tn.toUpperCase()}</p>
                     <p class="team-abbreviation">${standingsData.sta.co[i].di[x].t[t].ta}</p>

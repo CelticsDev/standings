@@ -37,11 +37,11 @@
             width: calc(100% + (680px - 100%));
         }
         thead tr .boxStatsSorter-headerDesc {
-            background-image: url('http://i.cdn.turner.com/drp/nba/celtics/sites/default/files/desc-light.gif');
+            background-image: url('https://i.cdn.turner.com/drp/nba/celtics/sites/default/files/desc-light.gif');
             box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.2);
         }
         thead tr .boxStatsSorter-headerAsc {
-            background-image: url('http://i.cdn.turner.com/drp/nba/celtics/sites/default/files/asc-light.gif');
+            background-image: url('https://i.cdn.turner.com/drp/nba/celtics/sites/default/files/asc-light.gif');
             box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.2);
         }
         thead tr .boxStatsSorter-header {
@@ -87,6 +87,7 @@
             th {
                 color: white;
                 font-weight: 500;
+                border-bottom: none;
                 &:first-of-type {
                     position: absolute;
                     overflow: hidden;
