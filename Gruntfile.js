@@ -2,138 +2,152 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    /*=============================
-    =            WATCH            =
-    =============================*/
+    //
+    //─── WATCH ──────────────────────────────────────────────────────
+    // Defines tasks to be run when files are changed.
 
     watch: {
       html: {
         files: ['src/standings.html', 'src/html/*.html'],
-        tasks: ['htmlmin', 'import', 'notify:done']
+        tasks: ['import', 'cachebreaker', 'notify:done'],
       },
       js: {
-        files: ['src/js/*.jsx'],
-        tasks: ['browserify', 'import', 'notify:done']
+        files: ['src/js/*.js'],
+        tasks: ['browserify', /*'newer:babel',*/ 'notify:done'],
       },
       css: {
         files: ['src/scss/*.scss', 'src/scss/mixins/*.scss'],
-        tasks: ['sass', 'import', 'notify:done']
-      }
+        tasks: ['newer:sass', 'notify:done'],
+      },
     },
 
-    /*===================================
-    =            MINIFY HTML            =
-    ===================================*/
-
-    htmlmin: {
-      dist: {
-        options: {
-          gruntLogHeader: false,
-          removeComments: true,
-          collapseWhitespace: true
-        },
-        files: {
-          'src/html/min/template.min.html': 'src/html/template.html' // CHANGE TEMPLATE NAME
-        }
-      }
-    },
-
-    /*====================================
-     =            COMPILE SASS            =
-     ====================================*/
+    //
+    //─── SASS ───────────────────────────────────────────────────────
+    // Compiles and minifies SCSS files. Also generates a sourcemap.
 
     sass: {
-      dist: {
-        options: {
-          gruntLogHeader: false,
-          sourcemap: 'none'
-        },
-        files: {
-          'dist/css/standings.css': 'src/scss/standings.scss'
-        }
-      },
       min: {
         options: {
-          gruntLogHeader: false,
-          sourcemap: 'none',
-          style: 'compressed'
+          style: 'compressed',
         },
         files: {
-          'dist/css/standings.min.css': 'src/scss/standings.scss'
-        }
-      }
+          'dist/css/standings.min.css': 'src/scss/main.scss',
+        },
+      },
     },
 
-    /*=========================================
-    =            UGLIFY JAVASCRIPT            =
-    =========================================*/
-
-    uglify: {
-      dist: {
-        files: {
-          'dist/js/standings.min.jsx': 'dist/js/standings.jsx'
-        }
-      }
-    },
-
-    /*==============================
-    =            IMPORT            =
-    ==============================*/
+    //
+    //─── IMPORT ──────────────────────────────────────────────────────
+    // Copies the HTML file to dist folder. Can also pull in external
+    // CSS & JS file contents using '@import path/to/file'.
 
     import: {
-      options: {
-        gruntLogHeader: false
-      },
       dist: {
         files: {
-          'dist/js/standings.jsx': 'src/js/standings.jsx',
-          'dist/standings.ready.html': 'src/standings.html'
-        }
-      }
+          'dist/index.html': 'src/standings.html',
+        },
+      },
     },
 
-    /*==================================
-    =            browserify            =
-    ==================================*/
+    //
+    //─── BROWSERIFY ────────────────────────────────────────────
+    // Allows use of node's require method to bundle node-modules.
+    // Also compiles ES6+ to ES5 using Babel.
 
     browserify: {
       dev: {
-        src: ['src/js/standings.jsx'],
-        dest: 'dist/js/standings.js',
+        src: ['src/js/main.js'],
+        dest: 'dist/js/standings.min.js',
         options: {
           browserifyOptions: { debug: true },
-          transform: [['babelify', { presets: ['env'] }]]
-        }
-      }
+          transform: [
+            [
+              'babelify',
+              {
+                presets: ['env'],
+                plugins: [
+                  [
+                    'transform-runtime',
+                    {
+                      polyfill: false,
+                      regenerator: true,
+                    },
+                  ],
+                ],
+              },
+            ],
+            'uglifyify',
+          ],
+        },
+      },
     },
 
-    /*==============================
-    =            NOTIFY            =
-    ==============================*/
+    //
+    //─── BABEL ──────────────────────────────────────────────────
+    // Compile ES6+ to ES5
+
+    babel: {
+      options: {
+        sourceMap: 'inline',
+        presets: [
+          [
+            'env',
+            {
+              targets: {
+                node: 'current',
+              },
+            },
+          ],
+        ],
+        minified: true,
+      },
+      dist: {
+        files: {
+          'dist/js/standings.min.js': 'src/js/main.js',
+        },
+      },
+    },
+
+    //
+    //─── NOTIFY ───────────────────────────────────────────
+    // Notifies you when all tasks have completed.
 
     notify: {
       done: {
         options: {
-          gruntLogHeader: false,
-          title: 'Grunt - standings',
-          message: 'DONE!'
-        }
-      }
-    }
+          title: 'standings - grunt',
+          message: 'build complete ✅✅✅',
+        },
+      },
+    },
+
+    //
+    //─── CACHE BREAKER ──────────────────────────────────────────────────
+    // Cache busts external CSS & JS by appending a timestamp query string
+    // to html tag links.
+
+    cachebreaker: {
+      dev: {
+        options: {
+          match: ['app_content-channel.min.js', 'app_content-channel.min.css'],
+        },
+        files: {
+          src: ['dist/index.html'],
+        },
+      },
+    },
   });
 
-  /*==================================
-  =            LOAD TASKS            =
-  ==================================*/
-
-  require('grunt-log-headers')(grunt);
-  grunt.loadNpmTasks('grunt-eslint');
-  grunt.loadNpmTasks('grunt-contrib-htmlmin');
-  grunt.loadNpmTasks('grunt-browserify');
+  //
+  //─── LOAD TASKS ────────────────────────────────────────────────────────────────────
+  // Load grunt tasks from node_modules.
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-import');
   grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-babel');
+  grunt.loadNpmTasks('grunt-cache-breaker');
   grunt.loadNpmTasks('grunt-notify');
+  grunt.loadNpmTasks('grunt-newer');
   grunt.registerTask('default', ['watch']);
 };

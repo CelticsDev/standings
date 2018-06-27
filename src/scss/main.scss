@@ -1,0 +1,300 @@
+@import 'mixins';
+@import 'variables';
+@import 'mixins/media-queries';
+/*=============================
+=            GAMES            =
+=============================*/
+
+.standings-wrap {
+    position: relative;
+}
+
+.season-select {
+    margin-bottom: 20px;
+    width: 145px;
+    height: 30px;
+}
+
+.box-table-wrap,
+.loading-table-wrap {
+    width: 100%;
+    height: 100%;
+    overflow-x: scroll;
+    margin-bottom: 20px;
+    table {
+        color: #6c6d6f;
+        &.active {
+            display: table;
+        }
+        overflow: hidden;
+        table-layout: fixed;
+        @include breakpoint(sm) {
+            margin-left: 75px;
+            width: calc(100% + (550px - 100%));
+        }
+        @include breakpoint(md) {
+            margin-left: 180px;
+            width: calc(100% + (680px - 100%));
+        }
+        thead tr .boxStatsSorter-headerDesc {
+            background-image: url('http://i.cdn.turner.com/drp/nba/celtics/sites/default/files/desc-light.gif');
+            box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.2);
+        }
+        thead tr .boxStatsSorter-headerAsc {
+            background-image: url('http://i.cdn.turner.com/drp/nba/celtics/sites/default/files/asc-light.gif');
+            box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.2);
+        }
+        thead tr .boxStatsSorter-header {
+            background-repeat: no-repeat;
+            background-position-y: 25px;
+            background-position-x: center;
+            &:hover {
+                box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.2);
+            }
+        }
+        tr {
+            width: 100%;
+            background-color: #fff;
+            &.active {
+                font-weight: 600;
+                background-color: #dddddd;
+                td {
+                    background-color: #dddddd;
+                }
+            }
+            &:nth-of-type(even) {
+                background-color: #fafafa;
+                td:first-of-type {
+                    background-color: #fafafa;
+                }
+            }
+            &:first-of-type {
+                td:first-of-type {
+                    margin-top: 0px;
+                }
+            }
+            &:nth-child(11) {
+                td {
+                    border-top: 1px solid #a7a7a7;
+                }
+            }
+            &.dnp {
+                color: #babcbe;
+            }
+            img {
+                width: 25px;
+            }
+            th {
+                color: white;
+                font-weight: 500;
+                &:first-of-type {
+                    position: absolute;
+                    overflow: hidden;
+                    left: 0;
+                    border-top: 1px solid #cbcbcb;
+                    border-left: 1px solid #cbcbcb;
+                    border-right: none;
+                    margin-top: -1px;
+                    /*              width: 24%; // Minimize the blank cell issue
+                                    min-width: 150px; //Minimize the blank cell issue */
+                    width: 250px;
+                    font-weight: 500;
+                    @include breakpoint(sm) {
+                        width: 130px;
+                    }
+                }
+            }
+            td {
+                height: 45px;
+                &:first-of-type {
+                    position: absolute;
+                    overflow: hidden;
+                    left: 0;
+                    border-left: 1px solid #cbcbcb;
+                    border-right: 1px solid #cbcbcb;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    width: 250px;
+                    font-weight: 400;
+                    display: flex;
+                    align-items: center;
+                    @include breakpoint(sm) {
+                        width: 130px;
+                    }
+                    p {
+                        margin: 0;
+                    }
+                    .seed {
+                        color: #a7a7a7;
+                        flex-basis: 8%;
+                        @include breakpoint(sm) {
+                            flex-basis: 14%;
+                        }
+                    }
+                    .logo-wrap {
+                        flex-basis: 15%;
+                        @include breakpoint(sm) {
+                            flex-basis: 33%;
+                        }
+                    }
+                    .team-name {
+                        display: block;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        @include breakpoint(sm) {
+                            display: none;
+                        }
+                    }
+                    .team-abbreviation {
+                        display: none;
+                        @include breakpoint(sm) {
+                            display: block;
+                        }
+                    }
+                    /*              width: 24%; // Minimize the blank cell issue
+                                    min-width: 150px; //Minimize the blank cell issue */
+                }
+            }
+        }
+        th,
+        td {
+            padding: 5px 10px 5px 10px;
+            text-align: center;
+            white-space: nowrap;
+            font-size: 14px;
+            &.inactive {
+                display: none;
+            }
+            &:first-child {
+                text-align: left;
+            }
+        }
+        h3 {
+            border-bottom: none;
+        }
+        .tablesorter-childRow td:not(:first-child):not(:nth-child(2)) {
+            opacity: 0.5;
+        }
+        &::-webkit-scrollbar {
+            -webkit-appearance: none;
+        }
+        &::-webkit-scrollbar:vertical {
+            width: 11px;
+        }
+        &::-webkit-scrollbar:horizontal {
+            height: 11px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            border: 2px solid white;
+            /* should match background, can't be transparent */
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        &::-webkit-scrollbar-track {
+            background-color: #fff;
+            border-radius: 8px;
+        }
+        &.loading {
+            border-width: 0px 1px 1px 1px;
+            border-color: #dddddd;
+            border-style: solid;
+            &::-webkit-scrollbar:vertical {
+                width: 0px;
+            }
+            &::-webkit-scrollbar:horizontal {
+                height: 0px;
+            }
+        }
+    }
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+    }
+    &::-webkit-scrollbar:vertical {
+        width: 11px;
+    }
+    &::-webkit-scrollbar:horizontal {
+        height: 11px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        border: 2px solid white;
+        /* should match background, can't be transparent */
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    &::-webkit-scrollbar-track {
+        background-color: #fff;
+        border-radius: 8px;
+    }
+}
+
+.filter-wrap {
+    margin-bottom: 15px;
+    label {
+        margin: 0;
+    }
+    .needs-loading,
+    .loading {
+        display: none;
+        &.active {
+            display: block;
+        }
+    }
+    .loading {
+        opacity: 0.5;
+    }
+    .games-filter {
+        display: none;
+        &.active {
+            display: block;
+        }
+    }
+}
+
+.box-table-wrap {
+    thead {
+        cursor: pointer;
+    }
+    td:first-of-type {
+        background-color: white;
+        font-weight: 400 !important;
+    }
+    tr {
+        &.multi-team-season {
+            border-width: 0px;
+        }
+        &.total {
+            border-width: 0px;
+        }
+        &.sub-season {
+            td:first-of-type {
+                border-width: 0px 1px;
+            }
+        }
+    }
+    .form-control {
+        margin-right: 10px;
+    }
+}
+
+a.on-current-roster {
+    cursor: pointer;
+}
+
+.east {
+    tr:first-child {
+        background-color: #2a65a7;
+    }
+    th {
+        background-color: #2a65a7;
+    }
+}
+
+.west {
+    th {
+        background-color: #c7314a;
+    }
+    tr:first-child {
+        background-color: #c7314a;
+    }
+}

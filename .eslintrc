@@ -1,0 +1,35 @@
+{
+    "extends": [
+        "airbnb",
+        "prettier"
+    ],
+    "rules": {
+        "no-console": 0,
+        "func-names": 0,
+        "wrap-iife": 0,
+        "spaced-comment": 0,
+        "space-before-function-paren": "off",
+        "no-var": "off",
+        "no-plusplus": "off",
+        "prefer-destructuring": "off",
+        "import/extensions": 0,
+        "global-require": "off",
+        "prettier/prettier": [
+            "error",
+            {
+                "trailingComma": "es5",
+                "singleQuote": true,
+                "printWidth": 200
+            }
+        ]
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "jquery": true
+    },
+    "parser": "babel-eslint",
+    "plugins": [
+        "prettier"
+    ]
+}
