@@ -1,4 +1,4 @@
-/*global Drupal */
+/*global Drupal forceStandingsYear */
 
 const feeds = require('celtics-feeds');
 
@@ -44,7 +44,10 @@ function loadStandings(year) {
 }
 
 jQuery(document).ready(() => {
-  const year = Drupal.settings.today.standings_season_year;
+  let year = Drupal.settings.today.standings_season_year;
+  if (typeof forceStandingsYear !== 'undefined') {
+    year = forceStandingsYear;
+  }
   loadStandings(year);
   for (let i = year; i > 2015; i--) {
     if (i === year) {
